@@ -1,5 +1,5 @@
 {
-  "appId": "nuxt.app",
-  "appName": "nuxt-app",
-  "webDir": ".output/public"
+  "appId": "vrsus.frontend",
+  "appName": "vrsus-frontend",
+  "webDir": "dist"
 }
