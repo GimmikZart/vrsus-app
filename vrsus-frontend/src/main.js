@@ -1,5 +1,15 @@
 import { createApp } from 'vue'
-import './style.css'
 import App from './App.vue'
+import vuetify from './plugins/vuetify'
+import router from './router'
+import { loadFonts } from './plugins/webfontloader'
+import { createPinia } from 'pinia'
 
-createApp(App).mount('#app')
+loadFonts()
+const pinia = createPinia()
+
+createApp(App)
+  .use(vuetify)
+  .use(pinia)
+  .use(router)
+  .mount('#app')

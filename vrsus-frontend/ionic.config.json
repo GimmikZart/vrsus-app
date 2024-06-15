@@ -1,5 +1,5 @@
 {
-  "name": "vrsus-app",
+  "name": "vrsus-frontend",
   "integrations": {
     "capacitor": {}
   },
