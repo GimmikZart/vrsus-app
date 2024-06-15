@@ -1,2 +1,2 @@
-export * as AuthApi from './modules/auth'
+export * as AuthApi from './modules/auth-api'
 
