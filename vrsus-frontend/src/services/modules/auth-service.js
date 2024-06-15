@@ -26,10 +26,38 @@ export async function login(email, password){
 
         if(userDataError) throw new Error(userDataError)
 
-        authStore.initUser(userData, loginData.session)
+        const user = {
+            name: userData.name,
+            lastname: userData.lastname,
+            email: userData.email,
+            dateOfBirth: userData.date_of_birth,
+            telephone: userData.telephone,
+            appRole: userData.app_role,
+        }
+        console.log('SUCCESS', loginData);
+        const session = {
+            accessToken: loginData.session.access_token,
+            refreshToken: loginData.session.refresh_token,
+            expiresIn: loginData.session.expires_in,
+            expiresAt: loginData.session.expires_at,
+            tokenType: loginData.session.token_type,
+        }
+        authStore.initUser(user, session)
     } catch (error) {
         console.log('ERRORE');
         console.error(error)
         console.error(error.message)
     }  
+}
+
+export async function logout(){
+    const authStore = useAuthStore()
+    try {
+        await AuthApi.logout()
+        authStore.emptySession()
+    } catch (error) {
+        console.log('ERRORE');
+        console.error(error)
+        console.error(error.message)
+    }
 }

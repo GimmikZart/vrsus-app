@@ -35,3 +35,7 @@ export async function getUserData(userId){
 
     return { data, error }   
 }
+
+export async function logout(){
+    await supabase.auth.signOut()
+}

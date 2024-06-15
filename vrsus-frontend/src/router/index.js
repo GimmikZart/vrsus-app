@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from '@ionic/vue-router'
 import AuthRoutes from './routes/auth-routes.js'
 
 const routes = [...AuthRoutes]
@@ -25,4 +25,5 @@ const router = createRouter({
   next()
 }) */
 
+console.log('ROUTES', router);
 export default router

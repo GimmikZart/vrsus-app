@@ -1,36 +1,52 @@
 import { defineStore } from 'pinia'
-import { useSessionStorage } from '@vueuse/core'
+import { storage } from '../plugins/storage'
 import { computed, ref } from 'vue'
+import { AuthService } from '../services/index.js'
 
 export const useAuthStore = defineStore('auth', () => {
-  const user = ref(useSessionStorage('vrsus-user', {}))
-  const session = ref(useSessionStorage('vrsus-session', {}))
+  const user = ref(null) 
+  const session = ref(null)
 
-  const isAuthenticated = computed(() => !!session.value.accessToken)
+  const isAuthenticated = computed(() => !!session?.value?.accessToken ?? false)
 
-  function initUser(userData, sessionData) {
-    user.value = {
-      name: userData.name,
-      lastname: userData.lastname,
-      email: userData.email,
-      dateOfBirth: userData.date_of_birth,
-      telephone: userData.telephone,
-      appRole: userData.app_role,
-    }
-    session.value = {
-      accessToken: sessionData.access_token,
-      refreshToken: sessionData.refresh_token,
-      expiresIn: sessionData.expires_in,
-      expiresAt: sessionData.expires_at,
-      tokenType: sessionData.token_type,
-    }
+  async function initUser(userData, sessionData) {
+    await storage.set('user', JSON.stringify(userData))
+    await storage.set('session', JSON.stringify(sessionData))
   }
 
+  async function emptySession() {
+    this.user = null
+    this.userDetails = null
+    this.session = null
+    await storage.remove('session')
+    await storage.remove('user')
+  }
+
+  function startSessionExpiryCheck() {
+    const expiryTime = this.session.expiresAt * 1000 - Date.now()
+    setTimeout(() => {
+      AuthService.logout()
+    }, expiryTime)
+  }
+
+  async function loadSessionFromStorage() {
+    const session = await storage.get('session')
+    const user = await storage.get('user')
+
+    if (session && user) {
+      this.session = JSON.parse(session)
+      this.user = JSON.parse(user)
+      this.startSessionExpiryCheck()
+    }
+  }
 
   return {
     isAuthenticated,
     initUser,
     user,
-    session
+    session,
+    emptySession,
+    startSessionExpiryCheck,
+    loadSessionFromStorage
   }
 })
