@@ -7,6 +7,7 @@ const password = ref('')
 const authStore = useAuthStore()
 
 const user = computed(() => authStore.user)
+const session = computed(() => authStore.session)
 
 async function login() {
     console.log('LOGIN')
@@ -20,4 +21,6 @@ async function login() {
     <v-text-field v-model="password" label="Password"></v-text-field>
     <v-btn @click="login()">Login</v-btn>
     {{ user }}
+    {{ session }}
+    {{ authStore.isAuthenticated }}
 </template>

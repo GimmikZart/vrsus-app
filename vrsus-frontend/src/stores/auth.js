@@ -6,7 +6,7 @@ export const useAuthStore = defineStore('auth', () => {
   const user = ref(useSessionStorage('vrsus-user', {}))
   const session = ref(useSessionStorage('vrsus-session', {}))
 
-  const isAuthenticated = computed(() => !!session.value.access_token)
+  const isAuthenticated = computed(() => !!session.value.accessToken)
 
   function initUser(userData, sessionData) {
     user.value = {
@@ -30,6 +30,7 @@ export const useAuthStore = defineStore('auth', () => {
   return {
     isAuthenticated,
     initUser,
-    user
+    user,
+    session
   }
 })
