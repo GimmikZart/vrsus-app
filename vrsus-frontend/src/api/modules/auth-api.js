@@ -16,3 +16,22 @@ export async function signInNewUser(userData){
 
     return { user, error }   
 }
+
+export async function login(email, password){
+    const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+    })
+
+    return { data, error }   
+}
+
+export async function getUserData(userId){
+    const { data, error } = await supabase
+            .from('users')
+            .select('*')
+            .eq('id', userId)
+            .single()
+
+    return { data, error }   
+}
