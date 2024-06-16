@@ -1,5 +1,6 @@
 import { AuthApi } from '../../api/index'
 import { useAuthStore } from '../../stores/auth'
+import { sendToDashboard } from '../../utils/router'
 
 export async function signInNewUser(userData){
     try {
@@ -27,6 +28,7 @@ export async function login(email, password){
         if(userDataError) throw new Error(userDataError)
 
         const user = {
+            id: userData.id,
             name: userData.name,
             lastname: userData.lastname,
             email: userData.email,
@@ -34,7 +36,6 @@ export async function login(email, password){
             telephone: userData.telephone,
             appRole: userData.app_role,
         }
-        console.log('SUCCESS', loginData);
         const session = {
             accessToken: loginData.session.access_token,
             refreshToken: loginData.session.refresh_token,
@@ -42,8 +43,8 @@ export async function login(email, password){
             expiresAt: loginData.session.expires_at,
             tokenType: loginData.session.token_type,
         }
-        authStore.initUser(user, session)
-        return "LOGGATO DAJEEEEE"
+        await authStore.initUser(user, session)
+        sendToDashboard()
     } catch (error) {
         console.log('ERRORE');
         console.error(error)

@@ -12,32 +12,31 @@ export const useAuthStore = defineStore('auth', () => {
   async function initUser(userData, sessionData) {
     await storage.set('user', JSON.stringify(userData))
     await storage.set('session', JSON.stringify(sessionData))
-    this.session = JSON.parse(await storage.get('session'))
-    this.user = JSON.parse(await storage.get('user'))
+    session.value = JSON.parse(await storage.get('session'))
+    user.value = JSON.parse(await storage.get('user'))
   }
 
   async function emptySession() {
-    this.user = null
-    this.userDetails = null
-    this.session = null
+    user.value = null
+    session.value = null
     await storage.remove('session')
     await storage.remove('user')
   }
 
   function startSessionExpiryCheck() {
-    const expiryTime = this.session.expiresAt * 1000 - Date.now()
+    const expiryTime = session.value.expiresAt * 1000 - Date.now()
     setTimeout(() => {
       AuthService.logout()
     }, expiryTime)
   }
 
   async function loadSessionFromStorage() {
-    const session = await storage.get('session')
-    const user = await storage.get('user')
+    const storageSession = await storage.get('session')
+    const storageUser = await storage.get('user')
 
-    if (session && user) {
-      this.session = JSON.parse(session)
-      this.user = JSON.parse(user)
+    if (session.value && user.value) {
+      session.value = JSON.parse(storageSession)
+      user.value = JSON.parse(storageUser)
       this.startSessionExpiryCheck()
     }
   }

@@ -6,10 +6,10 @@ import {
 
 export class RoleEnum {
   static ADMIN = 0
-  static MODERATOR = 1
+  static STAFF = 1
   static USER = 2
 
-  static Codes = [this.ADMIN, this.MODERATOR, this.USER]
+  static Codes = [this.ADMIN, this.STAFF, this.USER]
   static Labels = ['Admin', 'Moderator', 'User']
 
   static toSelectOptions(from, to) {

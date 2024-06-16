@@ -9,11 +9,11 @@
 <script setup>
 import { useAuthStore } from './stores/auth'
 import { initializeStorage } from './plugins/storage'
-import { onMounted } from 'vue'
+import { onBeforeMount } from 'vue'
 
 const authStore = useAuthStore()
 
-onMounted(async () => {
+onBeforeMount(async () => {
   await initializeStorage()
   await authStore.loadSessionFromStorage()
 })
