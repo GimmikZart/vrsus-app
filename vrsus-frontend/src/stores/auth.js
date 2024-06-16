@@ -12,6 +12,8 @@ export const useAuthStore = defineStore('auth', () => {
   async function initUser(userData, sessionData) {
     await storage.set('user', JSON.stringify(userData))
     await storage.set('session', JSON.stringify(sessionData))
+    this.session = JSON.parse(await storage.get('session'))
+    this.user = JSON.parse(await storage.get('user'))
   }
 
   async function emptySession() {

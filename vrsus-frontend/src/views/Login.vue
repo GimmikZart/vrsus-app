@@ -10,7 +10,7 @@ const user = computed(() => authStore.user)
 const session = computed(() => authStore.session)
 
 async function login() {
-    console.log('LOGIN')
+    console.log('LOGINnN')
     await AuthService.login(email.value, password.value)
 }
 </script>
@@ -20,7 +20,6 @@ async function login() {
     <v-text-field v-model="email" label="Email"></v-text-field>
     <v-text-field v-model="password" label="Password"></v-text-field>
     <v-btn @click="login()">Login</v-btn>
-    {{ user }}
-    {{ session }}
-    {{ authStore.isAuthenticated }}
+    <v-btn @click="AuthService.logout()">Logout</v-btn>
+    {{ authStore.isAuthenticated ? 'Authenticated' : 'Not authenticated'}}
 </template>

@@ -43,6 +43,7 @@ export async function login(email, password){
             tokenType: loginData.session.token_type,
         }
         authStore.initUser(user, session)
+        return "LOGGATO DAJEEEEE"
     } catch (error) {
         console.log('ERRORE');
         console.error(error)

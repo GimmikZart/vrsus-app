@@ -1,5 +1,9 @@
 {
   "appId": "vrsus.frontend",
   "appName": "vrsus-frontend",
-  "webDir": "dist"
+  "webDir": "dist",
+  "server": {
+    "url": "http://192.168.1.149:8100",
+    "cleartext": true
+  }
 }
